@@ -19,7 +19,7 @@ pipelines:
             - export IMAGE_VERSION=latest
             - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"; echo $IMAGE_COORDINATES
             # build and publish the docker image
-            . sandbox-ci/bitbucket-pipeline-scripts/docker-build-and-push.sh $IMAGE_COORDINATES
+            - . sandbox-ci/bitbucket-pipeline-scripts/docker-build-and-push.sh $IMAGE_COORDINATES
     master:
       - step:
           name: build and publish the hspc-ubuntu-base image
@@ -29,7 +29,7 @@ pipelines:
             - export IMAGE_VERSION=0.1.0
             - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"; echo $IMAGE_COORDINATES
             # build and publish the docker image
-            . sandbox-ci/bitbucket-pipeline-scripts/docker-build-and-push.sh $IMAGE_COORDINATES
+            - . sandbox-ci/bitbucket-pipeline-scripts/docker-build-and-push.sh $IMAGE_COORDINATES
     feature/*:
       - step:
           script:
