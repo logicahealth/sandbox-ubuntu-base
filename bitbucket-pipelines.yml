@@ -1,11 +1,3 @@
-# This is a sample build configuration for Docker.
-# Check our guides at https://confluence.atlassian.com/x/O1toN for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-# image: atlassian/default-image:latest
-
-# enable Docker for your repository
 options:
   docker: true
 
@@ -19,29 +11,31 @@ pipelines:
     develop:
       - step:
           name: build and publish the hspc-ubuntu-base image
-          script: # Modify the commands below to build your repository.
+          script:
+            - export IMAGE_REPO=hspconsortium
+            - export IMAGE_NAME=hspc-ubuntu-base
             - export IMAGE_VERSION=LATEST
-            # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
-            - export IMAGE_NAME=image: hspconsortium/hspc-ubuntu-base:$IMAGE_VERSION
+            - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"
             # build the Docker image (this will use the Dockerfile in the root of the repo)
-            - docker build -t $IMAGE_NAME .
+            - docker build -t $IMAGE_COORDINATES .
             # authenticate with the Docker Hub registry
             - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
             # push the new Docker image to the Docker registry
-            - docker push $IMAGE_NAME
+            - docker push $IMAGE_COORDINATES
     master:
       - step:
           name: build and publish the hspc-ubuntu-base image
-          script: # Modify the commands below to build your repository.
+          script:
+            - export IMAGE_REPO=hspconsortium
+            - export IMAGE_NAME=hspc-ubuntu-base
             - export IMAGE_VERSION=0.1.0
-            # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
-            - export IMAGE_NAME=image: hspconsortium/hspc-ubuntu-base:$IMAGE_VERSION
+            - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"
             # build the Docker image (this will use the Dockerfile in the root of the repo)
-            - docker build -t $IMAGE_NAME .
+            - docker build -t $IMAGE_COORDINATES .
             # authenticate with the Docker Hub registry
             - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
             # push the new Docker image to the Docker registry
-            - docker push $IMAGE_NAME
+            - docker push $IMAGE_COORDINATES
     feature/*:
       - step:
           script:
