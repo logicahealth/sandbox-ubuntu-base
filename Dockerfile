@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libyaml-dev \
     libffi-dev \
-    python-pip
+    python-pip \
+    apt-utils
 
 # General dev tools
 RUN apt-get install -y git

@@ -11,10 +11,12 @@ pipelines:
     develop:
       - step:
           name: build and publish the hspc-ubuntu-base image
+          caches:
+            - docker
           script:
             - export IMAGE_REPO=hspconsortium
             - export IMAGE_NAME=hspc-ubuntu-base
-            - export IMAGE_VERSION=LATEST
+            - export IMAGE_VERSION=latest
             - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"
             # build the Docker image (this will use the Dockerfile in the root of the repo)
             - docker build -t $IMAGE_COORDINATES .
@@ -25,6 +27,8 @@ pipelines:
     master:
       - step:
           name: build and publish the hspc-ubuntu-base image
+          caches:
+            - docker
           script:
             - export IMAGE_REPO=hspconsortium
             - export IMAGE_NAME=hspc-ubuntu-base

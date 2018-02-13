@@ -11,6 +11,7 @@ Contains:
     -npm
     -python
     -aws tools
+    -aws ecs-cli
     -git
     -openssl
     -gnupg
