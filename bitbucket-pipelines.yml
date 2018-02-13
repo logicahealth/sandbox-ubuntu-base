@@ -12,16 +12,14 @@ pipelines:
       - step:
           name: build and publish the hspc-ubuntu-base image
           script:
+            # get the ci scripts
+            - git clone https://bitbucket.org/hspconsortium/sandbox-ci.git
             - export IMAGE_REPO=hspconsortium
             - export IMAGE_NAME=hspc-ubuntu-base
             - export IMAGE_VERSION=latest
-            - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"
-            # build the Docker image (this will use the Dockerfile in the root of the repo)
-            - docker build -t $IMAGE_COORDINATES .
-            # authenticate with the Docker Hub registry
-            - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
-            # push the new Docker image to the Docker registry
-            - docker push $IMAGE_COORDINATES
+            - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"; echo $IMAGE_COORDINATES
+            # build and publish the docker image
+            . sandbox-ci/bitbucket-pipeline-scripts/docker-build-and-push.sh $IMAGE_COORDINATES
     master:
       - step:
           name: build and publish the hspc-ubuntu-base image
@@ -29,13 +27,9 @@ pipelines:
             - export IMAGE_REPO=hspconsortium
             - export IMAGE_NAME=hspc-ubuntu-base
             - export IMAGE_VERSION=0.1.0
-            - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"
-            # build the Docker image (this will use the Dockerfile in the root of the repo)
-            - docker build -t $IMAGE_COORDINATES .
-            # authenticate with the Docker Hub registry
-            - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
-            # push the new Docker image to the Docker registry
-            - docker push $IMAGE_COORDINATES
+            - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"; echo $IMAGE_COORDINATES
+            # build and publish the docker image
+            . sandbox-ci/bitbucket-pipeline-scripts/docker-build-and-push.sh $IMAGE_COORDINATES
     feature/*:
       - step:
           script:
