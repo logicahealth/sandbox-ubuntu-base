@@ -12,13 +12,45 @@ options:
 pipelines:
   default:
     - step:
-        script: # Modify the commands below to build your repository.
-          # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
-          - export IMAGE_NAME=your-Dockerhub-account/your-docker-image-name:$BITBUCKET_COMMIT
-
-          # build the Docker image (this will use the Dockerfile in the root of the repo)
-          - docker build -t $IMAGE_NAME .
-          # authenticate with the Docker Hub registry
-          - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
-          # push the new Docker image to the Docker registry
-          - docker push $IMAGE_NAME
+        script:
+          - echo "Please use a GitFlow branch"
+          - exit 1;
+  branches:
+    develop:
+      - step:
+          name: build and publish the hspc-ubuntu-base image
+          script: # Modify the commands below to build your repository.
+            - export IMAGE_VERSION=LATEST
+            # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
+            - export IMAGE_NAME=image: hspconsortium/hspc-ubuntu-base:$IMAGE_VERSION
+            # build the Docker image (this will use the Dockerfile in the root of the repo)
+            - docker build -t $IMAGE_NAME .
+            # authenticate with the Docker Hub registry
+            - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+            # push the new Docker image to the Docker registry
+            - docker push $IMAGE_NAME
+    master:
+      - step:
+          name: build and publish the hspc-ubuntu-base image
+          script: # Modify the commands below to build your repository.
+            - export IMAGE_VERSION=0.1.0
+            # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
+            - export IMAGE_NAME=image: hspconsortium/hspc-ubuntu-base:$IMAGE_VERSION
+            # build the Docker image (this will use the Dockerfile in the root of the repo)
+            - docker build -t $IMAGE_NAME .
+            # authenticate with the Docker Hub registry
+            - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+            # push the new Docker image to the Docker registry
+            - docker push $IMAGE_NAME
+    feature/*:
+      - step:
+          script:
+            - echo "all good"
+    release/*:
+      - step:
+          script:
+            - echo "all good"
+    hotfix/*:
+      - step:
+          script:
+            - echo "all good"

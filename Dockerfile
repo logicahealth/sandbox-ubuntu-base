@@ -26,6 +26,7 @@ RUN pip install --upgrade pip \
 # Install jq and qwscli
 RUN apt-get update && apt-get install -y jq python-pip && pip install --upgrade pip && pip install awscli
 
+RUN curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest && chmod +x /usr/local/bin/ecs-cli
 
 #RUN curl -o /usr/local/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x /usr/local/bin/jq
 #RUN apk update && apk upgrade && \
