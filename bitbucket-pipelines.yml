@@ -24,6 +24,8 @@ pipelines:
       - step:
           name: build and publish the hspc-ubuntu-base image
           script:
+            # get the ci scripts
+            - git clone https://bitbucket.org/hspconsortium/sandbox-ci.git
             - export IMAGE_REPO=hspconsortium
             - export IMAGE_NAME=hspc-ubuntu-base
             - export IMAGE_VERSION=0.1.0
