@@ -5,7 +5,7 @@ Base Docker image for HSPC projects.
 Contains:
 
     -Ubuntu
-    -Java 8
+    -Java 11
     -mvn
     -nodejs
     -npm

@@ -1,4 +1,23 @@
-FROM rowanto/docker-java8-mvn-nodejs-npm
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get upgrade -y
+
+# install java
+RUN apt install openjdk-11-jdk -y
+RUN java -version
+
+# install Maven
+RUN apt -yq install maven --assume-yes
+
+#install curl
+RUN apt -yq install curl
+
+#install node
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt -yq install nodejs
+RUN node --version
 
 #RUN apt-get install python py-pip py-setuptools ca-certificates curl groff less && pip --no-cache-dir install awscli && rm -rf /var/cache/apk/*
 
