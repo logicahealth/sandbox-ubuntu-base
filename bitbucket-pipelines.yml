@@ -28,7 +28,7 @@ pipelines:
             - git clone https://bitbucket.org/hspconsortium/sandbox-ci.git
             - export IMAGE_REPO=hspconsortium
             - export IMAGE_NAME=hspc-ubuntu-base
-            - export IMAGE_VERSION=0.2.0
+            - export IMAGE_VERSION=0.2.1
             - export IMAGE_COORDINATES="$IMAGE_REPO/$IMAGE_NAME:$IMAGE_VERSION"; echo $IMAGE_COORDINATES
             # build and publish the docker image
             - . sandbox-ci/bitbucket-pipeline-scripts/docker-build-and-push.sh $IMAGE_COORDINATES

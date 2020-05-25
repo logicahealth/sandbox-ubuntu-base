@@ -14,6 +14,9 @@ RUN apt -yq install maven --assume-yes
 #install curl
 RUN apt -yq install curl
 
+# openssl is the only required thing to install
+RUN apt-get -y install openssl
+
 #install node
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt -yq install nodejs
