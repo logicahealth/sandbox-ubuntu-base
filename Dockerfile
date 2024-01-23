@@ -1,8 +1,28 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
+LABEL maintainer="Preston Lee"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get upgrade -y
+
+# python and relevant tools
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    libxml2-dev \
+    libxslt-dev \
+    libssl-dev \
+    zlib1g-dev \
+    libyaml-dev \
+    libffi-dev \
+    python3-pip \
+    apt-utils \
+    git \
+    jq \
+    curl \
+    openssl \
+    bash \
+    gnupg
 
 # install java
 RUN apt install openjdk-11-jdk -y
@@ -11,45 +31,27 @@ RUN java -version
 # install Maven
 RUN apt -yq install maven --assume-yes
 
-#install curl
-RUN apt -yq install curl
-
-# openssl is the only required thing to install
-RUN apt-get -y install openssl
-
 #install node
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+# RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+# RUN apt -yq install nodejs
+# RUN node --version
+RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash -
 RUN apt -yq install nodejs
-RUN node --version
 
 #RUN apt-get install python py-pip py-setuptools ca-certificates curl groff less && pip --no-cache-dir install awscli && rm -rf /var/cache/apk/*
 
-# python and relevant tools
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    python \
-    python-dev \
-    libxml2-dev \
-    libxslt-dev \
-    libssl-dev \
-    zlib1g-dev \
-    libyaml-dev \
-    libffi-dev \
-    python-pip \
-    apt-utils
 
-# General dev tools
-RUN apt-get install -y git
 
 # Latest versions of python tools via pip
 RUN pip install --upgrade pip \
                           virtualenv \
                           requests
 
-# Install jq and qwscli
-RUN apt-get update && apt-get install -y jq python-pip && pip install --upgrade pip && pip install awscli
 
-RUN curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest && chmod +x /usr/local/bin/ecs-cli
+RUN pip install --upgrade pip
+# && pip install awscli
+
+# RUN curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest && chmod +x /usr/local/bin/ecs-cli
 
 #RUN curl -o /usr/local/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x /usr/local/bin/jq
 #RUN apk update && apk upgrade && \
@@ -61,9 +63,6 @@ RUN curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-c
 # && wget --quiet http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz -O - | tar xzf - \
 # && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
 # && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
-
-RUN apt-get update && apt-get install openssl
-RUN apt-get update && apt-get install bash gnupg
 
 #ENV MAVEN_HOME /usr/share/maven
 
